@@ -1,5 +1,7 @@
 <?php
 
+use \App\Models\Article;
+
 require __DIR__ . '/../autoload.php';
 
 $article = new Article;
@@ -10,4 +12,6 @@ $article->content = 'В американском штате Калифорния
 Грабитель разбил окно закрытого заведения, однако не взял ничего ценного. Его целью, судя по видеозаписи, была «сидящая» на фортепиано игрушка.
 О судьбе правонарушителя ничего не сообщается. В магазине сказали, что похищенную игрушку заменили новой.';
 
-echo '<pre>'.print_r($article->update(), true).'</pre>';
+$article->update();
+
+//echo '<pre>'.print_r($article->update(), true).'</pre>';

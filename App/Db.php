@@ -15,21 +15,32 @@ class Db
 
     public function __construct()
     {
-        $this->dbh = new \PDO('mysql:host=localhost; dbname=php2', 'root', '');
+        $config = new Config;
+        $this->dbh = new \PDO('mysql:host=' .$config->data['db']['host']. '; 
+                                    dbname=' .$config->data['db']['dbname'] ,
+                                    $config->data['db']['user'], $config->data['db']['password']);
     }
 
     public function query($sql, $params = [], $class = null)
     {
         $sth = $this->dbh->prepare($sql);
         $sth->execute($params);
-        $sth->setFetchMode(\PDO::FETCH_ASSOC);
-        $data = $sth->fetchAll(\PDO::FETCH_CLASS, $class);
-        return $data;
+        if ($class == null){
+            $sth->setFetchMode(\PDO::FETCH_ASSOC);
+        } else {
+            $sth->setFetchMode(\PDO::FETCH_CLASS, $class);
+        }
+        return $sth->fetchAll();
     }
 
     public function execute($query, $params=[])
     {
         $sth = $this->dbh->prepare($query);
         return $sth->execute($params);
+    }
+
+    public function lastInsertId()
+    {
+        return $this->dbh->lastInsertId();
     }
 }
