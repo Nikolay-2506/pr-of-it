@@ -22,14 +22,22 @@ class Db
     {
         $sth = $this->dbh->prepare($sql);
         $sth->execute($params);
-        $sth->setFetchMode(\PDO::FETCH_ASSOC);
-        $data = $sth->fetchAll(\PDO::FETCH_CLASS, $class);
-        return $data;
+        if ($class == null){
+            $sth->setFetchMode(\PDO::FETCH_ASSOC);
+        } else {
+            $sth->setFetchMode(\PDO::FETCH_CLASS, $class);
+        }
+        return $sth->fetchAll();
     }
 
     public function execute($query, $params=[])
     {
         $sth = $this->dbh->prepare($query);
         return $sth->execute($params);
+    }
+
+    public function lastInsertId()
+    {
+        return $this->dbh->lastInsertId();
     }
 }

@@ -43,7 +43,8 @@ abstract class Model
 
         $sql .= ' (' . implode(', ', $fieds ) . ') VALUE (' . implode(', ', $bield) . ')';
 
-        return $db->execute($sql, $data);
+        $db->execute($sql, $data);
+        $this->id = $db->lastInsertId();
     }
 
     public function update()
@@ -65,7 +66,23 @@ abstract class Model
         }
 
         $sql .= ' SET ' . implode(', ', $fieds). ' WHERE ' .$fieldid. ' ';
-        return $db->execute($sql, $data);
+
+        $db->execute($sql, $data);
+    }
+
+    public function delete()
+    {
+        $db = new Db;
+
+        $sql = 'DELETE FROM ' . static::$table ;
+        $props = get_object_vars($this);
+
+        $bield = ':' . $props['id'];
+        $data[':' . $props['id']] = $props['id'];
+
+        $sql .= ' WHERE id = ' . $bield;
+
+        $db->execute($sql, $data);
     }
 
     public static function findById($id)
@@ -73,6 +90,7 @@ abstract class Model
         $db = new Db;
         $bield[':id'] = $id;
         $sql = 'SELECT * FROM '. static::$table . ' WHERE id = :id';
-        return $db->query($sql, $bield, static::class);
+        $result = $db->query($sql, $bield, static::class);
+        return $result[0];
     }
 }
