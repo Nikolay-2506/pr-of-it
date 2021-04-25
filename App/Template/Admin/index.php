@@ -23,13 +23,13 @@
         <tr><th>Заголовок</th><th>Контент</th></tr>
         <?php foreach ($data as $article){ ?>
             <tr>
-                <td> <a class="record" href="/AdminPanel/recordEditor.php?record=old&id=<?php echo $article->id; ?>"> <?php echo $article->title; ?> </a> </td>
+                <td> <a class="record" href="/App/AdminPanel/recordEditor.php?record=old&id=<?php echo $article->id; ?>"> <?php echo $article->title; ?> </a> </td>
                 <td><?php echo $article->content; ?></td>
             </tr>
         <?php } ?>
     </table>
 
-    <form action="/AdminPanel/recordEditor.php" method="get" name="add">
+    <form action="/App/AdminPanel/recordEditor.php" method="get" name="add">
         <button name="record" value="new">Добавить новую запись</button>
     </form>
 

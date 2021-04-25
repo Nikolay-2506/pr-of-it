@@ -17,25 +17,39 @@
         .record button#del {float: left; margin: 235px 0px 0px 435px; position: absolute; display: block}
     </style>
 
-    <form class="record" action="/AdminPanel/dataEntry.php" method="post">
-        <input name="id" readonly="readonly" value="<?php echo $article->id; ?>" >
+    <form class="record" action="/App/AdminPanel/dataEntry.php" method="post">
+        <?php if(isset($article) && !empty($article->id)): ?>
+            <input name="id" readonly="readonly" value="<?php echo $article->id; ?>" >
+        <?php endif; ?>
 
         <textarea id="title" name="title" placeholder="Заголовок статьи" cols="80" rows="5">
-            <?php if(true == isset($_GET['id'])) echo $article->title;?>
+            <?php if(isset($article) && !empty($article->title)) {
+                        echo $article->title;
+                  } else { echo ''; } ?>
         </textarea>
 
         <textarea id="content" name="content" placeholder="Текст статьи" cols="80" rows="5">
-            <?php if(true == isset($_GET['id'])) echo $article->content;
-                    else echo '';?>
+            <?php if(isset($article) && !empty($article->content)) {
+                        echo $article->content;
+                  } else { echo ''; } ?>
         </textarea>
 
         <button type="submit">Отправить</button>
 
         <?php if($_GET['record'] == 'old'){ ?>
-            <button id="del" type="submit" name="id" value="<?php echo $article->id; ?>" formaction="/AdminPanel/recordDelete.php">Удалить</button>
+            <button id="del" type="submit" name="id" formaction="/App/AdminPanel/recordDelete.php"
+                    value="<?php echo $article->id; ?>">
+                Удалить
+            </button>
         <?php } else{ ?>
             <button id="del" disabled="disabled" type="submit">Удалить</button>
         <?php }?>
     </form>
+
+    <?php /*if(($_GET['record'] == 'old') && (isset($article)) && (!empty($article->id))): */?><!--
+    <form method="post" action="/App/AdminPanel/recordDelete.php">
+        <button id="del" type="submit" name="id" value="<?php /*echo $article->id; */?>">Удалить</button>
+    </form>
+    --><?php /*endif; */?>
 </body>
 </html>
