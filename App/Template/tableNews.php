@@ -1,3 +1,8 @@
+<?php use App\View; ?>
+<?php use App\Models\Article; ?>
+<?php /** @var $this View */ ?>
+<?php /** @var $article Article */ ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,24 +11,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-    <?php
-
-        foreach ($data as $article) {
-            echo '<a href="/article.php?id='.$article->id.'" > 
-                    <h2 style = "font-style:italic">'. $article->title . ' </h2 >
-                  </a>';
-
-            echo '<div style = "background:#eeeeee; border:1px solid #cccccc; padding:5px 10px" >
-                    <span style = "font-size:14px" >
-                        <span style = "font-family:Comic Sans MS,cursive" >
-                            <code > ' . $article->content. ' .</code >
-                        </span >
-                    </span >
-                  </div >';
-
-            echo '<p >&nbsp;</p >';
-            echo '<hr />';
-        }
-    ?>
+    <?php foreach ($this->news as $article): ?>
+        <a href="/article.php?id=<?php echo $article->id; ?>">
+            <h2 style="font-style: italic"><?php echo $article->title ?? '';?></h2>
+            <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px;">
+                <span style = "font-family:Comic Sans MS,cursive; font-size:14px">
+                    <code><?php echo $article->content ?? ''; ?></code>
+                </span>
+            </div>
+        </a>
+        <hr/>
+    <?php endforeach; ?>
 </body>
 </html>
