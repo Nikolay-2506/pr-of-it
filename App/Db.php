@@ -8,6 +8,7 @@
 
 namespace App;
 
+use PDO as PDO;
 
 class Db
 {
@@ -15,14 +16,19 @@ class Db
 
     public function __construct()
     {
-        $this->dbh = new \PDO('mysql:host=localhost; dbname=php2', 'root', '');
+        $config = Config::init();
+        $this->dbh = new PDO('mysql:host=' . $config->data['db']['host'] . ';' .
+                            'dbname=' . $config->data['db']['dbname'] . ';' .
+                            'charset=' . $config->data['db']['charset'] . ';',
+                        $config->data['db']['user'],
+                        $config->data['db']['password']);
     }
 
     public function query($sql, $params = [], $class = null)
     {
         $sth = $this->dbh->prepare($sql);
         $sth->execute($params);
-        if ($class == null){
+        if ($class == null) {
             $sth->setFetchMode(\PDO::FETCH_ASSOC);
         } else {
             $sth->setFetchMode(\PDO::FETCH_CLASS, $class);
@@ -30,7 +36,7 @@ class Db
         return $sth->fetchAll();
     }
 
-    public function execute($query, $params=[])
+    public function execute($query, $params = [])
     {
         $sth = $this->dbh->prepare($query);
         return $sth->execute($params);

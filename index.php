@@ -1,12 +1,10 @@
 <?php
 
 use \App\Models\Article;
-use App\Models\User;
+use App\View;
 
 require __DIR__ . '/autoload.php';
 
-$article = new Article;
-
-$data = Article::findLastThree();
-
-include __DIR__ . '/Template/tableNews.php';
+$view = new View;
+$view->news = Article::findLastThree();
+print $view->render(__DIR__ . '/App/Template/tableNews.php');
