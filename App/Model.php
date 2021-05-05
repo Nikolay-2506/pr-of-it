@@ -53,22 +53,17 @@ abstract class Model
         $sql = 'UPDATE ' . static::$table;
         $props = get_object_vars($this);
 
-        var_dump($this, $props);
-
         $fields = [];
         $data = [];
         foreach ($props as $name => $value) {
             if ('id' != $name) {
                 $fields[] = $name . ' = :' . $name;
             }
+            if ('data' == $name) { continue; }
             $data[':' . $name] = $value;
         }
 
-        var_dump($fields, $data);
-
         $sql .= ' SET ' . implode(', ', $fields) . ' WHERE id = :id';
-
-        var_dump($sql);
 
         $db->execute($sql, $data);
     }

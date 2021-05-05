@@ -6,6 +6,7 @@ namespace App;
 
 trait ViewTrait
 {
+    protected array $data = [];
     /**
      * @param $name
      * @param $value

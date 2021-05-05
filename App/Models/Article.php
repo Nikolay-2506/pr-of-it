@@ -6,12 +6,13 @@ namespace App\Models;
 use App\Db;
 use App\Model;
 use App\ViewTrait;
+use Countable;
 
 /**
  * Class Article
  * @package App\Models
  *
- * @property $author
+ * @property Author $author
  */
 class Article extends Model
 {
@@ -24,4 +25,17 @@ class Article extends Model
     public $title;
     public $content;
     public $author_id;
+
+    public function __get($name)
+    {
+        if ($name == 'author') {
+            if (!is_null($this->author_id)) {
+                if (!isset($this->author)){
+                    $this->author = Author::findById($this->author_id);
+                }
+            }
+        }
+
+        return $this->data[$name] ?? null;
+    }
 }

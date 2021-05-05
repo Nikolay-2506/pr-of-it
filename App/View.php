@@ -3,17 +3,18 @@
 
 namespace App;
 
+use App\Models\Article;
+
 /**
  * Class View
  * @package App
  *
- * @property $news
+ * @property Article[] $news
+ * @property Article $article
  */
 class View
 {
     use ViewTrait;
-
-    protected array $data = [];
 
     /**
      * @param string $template

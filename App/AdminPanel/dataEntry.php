@@ -11,7 +11,6 @@ if (!empty($_POST['id'])) {
 }
 $article->title     = $_POST['title'];
 $article->content   = $_POST['content'];
-
 $article->save();
 
 header("Location: http://profit.local/App/AdminPanel/admin.php");

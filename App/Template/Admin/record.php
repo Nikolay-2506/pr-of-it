@@ -1,3 +1,5 @@
+<?php use App\View; ?>
+<?php /** @var View $this */ ?>
 <!doctype html>
 <html lang="ru">
 <head>
@@ -14,24 +16,24 @@
         .record textarea#title{float: left; border: 2px solid gray; margin: 41px 0px 20px 10px; position: absolute; display: block}
         .record textarea#content{float: left; border: 2px solid gray; margin: 140px 0px 20px 10px; position: absolute; display: block}
         .record button {float: left; margin: 235px 0px 0px 515px; position: absolute; display: block}
-        .record button#del {float: left; margin: 235px 0px 0px 435px; position: absolute; display: block}
+        .record button#del {float: left; margin: 235px 0px 0px 400px; position: absolute; display: block}
     </style>
 
     <form class="record" action="/App/AdminPanel/dataEntry.php" method="post">
-        <?php if(isset($article) && !empty($article->id)): ?>
-            <input name="id" readonly="readonly" value="<?php echo $article->id; ?>" >
+        <?php if(isset($this->article)): ?>
+            <input name="id" readonly="readonly" value="<?php echo $this->article->id; ?>" >
         <?php endif; ?>
 
         <textarea id="title" name="title" placeholder="Заголовок статьи" cols="80" rows="5">
-            <?php if(isset($article) && !empty($article->title)) {
-                        echo $article->title;
-                  } else { echo ''; } ?>
+            <?php if(isset($this->article)): ?>
+                <?php echo $this->article->title;?>
+            <?php endif; ?>
         </textarea>
 
         <textarea id="content" name="content" placeholder="Текст статьи" cols="80" rows="5">
-            <?php if(isset($article) && !empty($article->content)) {
-                        echo $article->content;
-                  } else { echo ''; } ?>
+            <?php if(isset($this->article)): ?>
+                <?php echo $this->article->content;?>
+            <?php endif; ?>
         </textarea>
 
         <button type="submit">Отправить</button>
@@ -45,11 +47,5 @@
             <button id="del" disabled="disabled" type="submit">Удалить</button>
         <?php }?>
     </form>
-
-    <?php /*if(($_GET['record'] == 'old') && (isset($article)) && (!empty($article->id))): */?><!--
-    <form method="post" action="/App/AdminPanel/recordDelete.php">
-        <button id="del" type="submit" name="id" value="<?php /*echo $article->id; */?>">Удалить</button>
-    </form>
-    --><?php /*endif; */?>
 </body>
 </html>

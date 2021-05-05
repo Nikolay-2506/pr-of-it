@@ -14,12 +14,25 @@
     <?php foreach ($this->news as $article): ?>
         <a href="/article.php?id=<?php echo $article->id; ?>">
             <h2 style="font-style: italic"><?php echo $article->title ?? '';?></h2>
-            <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px;">
+        </a>
+        <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px;">
                 <span style = "font-family:Comic Sans MS,cursive; font-size:14px">
                     <code><?php echo $article->content ?? ''; ?></code>
                 </span>
+        </div>
+        <?php if(!is_null($article->author)): ?>
+            <div style="padding:5px 10px;">
+                <span>Автор статьи:
+                    <span>
+                        <?php
+                            echo $article->author->firstName . ' ' .
+                                 $article->author->lastName . ' | ' .
+                                 $article->author->email;
+                        ?>
+                    </span>
+                </span>
             </div>
-        </a>
+        <?php endif;?>
         <hr/>
     <?php endforeach; ?>
 </body>

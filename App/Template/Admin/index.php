@@ -1,5 +1,6 @@
 <?php use App\View;?>
 <?php use App\Models\Article;?>
+<?php use App\Models\Author; ?>
 <?php /** @var View $this */ ?>
 <?php /** @var Article $article */?>
 <!doctype html>
@@ -64,6 +65,7 @@
     <tr>
         <th>Заголовок</th>
         <th>Контент</th>
+        <th>Автор</th>
     </tr>
     <?php foreach ($this->news as $article): ?>
         <tr>
@@ -75,6 +77,15 @@
             </td>
             <td>
                 <?php echo $article->content; ?>
+            </td>
+            <td>
+                <?php if (!is_null($article->author)): ?>
+                    <?php echo $article->author->firstName . ' ' . $article->author->lastName; ?>
+                    <hr/>
+                    <?php echo $article->author->email;?>
+                <?php else: ?>
+                    Авто не известен
+                <?php endif; ?>
             </td>
         </tr>
     <?php endforeach; ?>
