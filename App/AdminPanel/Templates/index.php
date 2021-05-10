@@ -1,6 +1,5 @@
 <?php use App\View;?>
 <?php use App\Models\Article;?>
-<?php use App\Models\Author; ?>
 <?php /** @var View $this */ ?>
 <?php /** @var Article $article */?>
 <!doctype html>
@@ -71,7 +70,7 @@
         <tr>
             <td>
                 <a class="record"
-                   href="/App/AdminPanel/recordEditor.php?record=old&id=<?php echo $article->id; ?>">
+                   href="/App/AdminPanel/index.php?ctrl=edit&id=<?php echo $article->id; ?>">
                     <?php echo $article->title; ?>
                 </a>
             </td>
@@ -84,15 +83,15 @@
                     <hr/>
                     <?php echo $article->author->email;?>
                 <?php else: ?>
-                    Авто не известен
+                    Автор не известен
                 <?php endif; ?>
             </td>
         </tr>
     <?php endforeach; ?>
 </table>
 
-<form action="/App/AdminPanel/recordEditor.php" method="get" name="add">
-    <button name="record" value="new">Добавить новую запись</button>
+<form action="/App/AdminPanel/index.php" method="get" name="add">
+    <button name="ctrl" value="edit">Добавить новую запись</button>
 </form>
 
 </body>

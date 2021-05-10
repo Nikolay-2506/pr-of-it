@@ -57,9 +57,9 @@ abstract class Model
         $data = [];
         foreach ($props as $name => $value) {
             if ('id' != $name) {
+                if ('data' == $name) { continue; }
                 $fields[] = $name . ' = :' . $name;
             }
-            if ('data' == $name) { continue; }
             $data[':' . $name] = $value;
         }
 
@@ -83,7 +83,15 @@ abstract class Model
         $db = new Db;
         $builds[':id'] = $id;
         $sql = 'SELECT * FROM ' . static::$table . ' WHERE id = :id';
-        return $db->query($sql, $builds, static::class)[0];
+        $data = $db->query($sql, $builds, static::class);
+        if (is_array($data)) {
+            foreach ($data as $datum) {
+                if ($datum instanceof static) {
+                    return $datum;
+                }
+            }
+        }
+        return new static;
     }
 
     public function save()

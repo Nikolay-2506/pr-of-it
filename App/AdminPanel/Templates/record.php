@@ -19,9 +19,23 @@
         .record button#del {float: left; margin: 235px 0px 0px 400px; position: absolute; display: block}
     </style>
 
-    <form class="record" action="/App/AdminPanel/dataEntry.php" method="post">
+    <form class="record" action="/App/AdminPanel/index.php?ctrl=save" method="post">
         <?php if(isset($this->article)): ?>
             <input name="id" readonly="readonly" value="<?php echo $this->article->id; ?>" >
+        <?php endif; ?>
+
+        <?php if(isset($this->authors)): ?>
+            <label for="author">Автор статьи:</label>
+            <select name="author_id" id="author">
+                <?php foreach($this->authors as $author): ?>
+                    <option value="<?php echo $author->id; ?>"
+                        <?php if (!empty($this->article->id)) {
+                                echo ($author->id == $this->article->id) ? 'selected' : '';
+                              } ?>>
+                        <?php echo $author->generateFullNameAuthor() . ' | ' . $author->email; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         <?php endif; ?>
 
         <textarea id="title" name="title" placeholder="Заголовок статьи" cols="80" rows="5">
@@ -38,14 +52,14 @@
 
         <button type="submit">Отправить</button>
 
-        <?php if($_GET['record'] == 'old'){ ?>
-            <button id="del" type="submit" name="id" formaction="/App/AdminPanel/recordDelete.php"
-                    value="<?php echo $article->id; ?>">
+        <?php if(isset($this->article)): ?>
+            <button id="del" type="submit" name="id" formaction="/App/AdminPanel/index.php?ctrl=delete"
+                    value="<?php echo $this->article->id; ?>">
                 Удалить
             </button>
-        <?php } else{ ?>
+        <?php else: ?>
             <button id="del" disabled="disabled" type="submit">Удалить</button>
-        <?php }?>
+        <?php endif; ?>
     </form>
 </body>
 </html>
