@@ -12,7 +12,7 @@
 </head>
 <body>
     <?php foreach ($this->news as $article): ?>
-        <a href="/article.php?id=<?php echo $article->id; ?>">
+        <a href="?ctrl=article&id=<?php echo $article->id; ?>">
             <h2 style="font-style: italic"><?php echo $article->title ?? '';?></h2>
         </a>
         <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px;">

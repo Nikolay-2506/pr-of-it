@@ -4,6 +4,7 @@
 namespace App;
 
 use App\Models\Article;
+use App\Models\Author;
 
 /**
  * Class View
@@ -11,6 +12,7 @@ use App\Models\Article;
  *
  * @property Article[] $news
  * @property Article $article
+ * @property Author[] $authors
  */
 class View
 {
