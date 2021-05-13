@@ -2,6 +2,10 @@
 
 namespace App;
 
+use App\Exceptions\Errors;
+use App\Exceptions\NotFoundException;
+use Exception;
+use Throwable;
 
 abstract class Model
 {
@@ -31,7 +35,7 @@ abstract class Model
 
         $fields = [];
         $builds = [];
-        $data   = [];
+        $data = [];
         foreach ($props as $name => $value) {
             if ('id' == $name) {
                 continue;
@@ -41,7 +45,8 @@ abstract class Model
             $data[':' . $name] = $value;
         }
 
-        $sql .= ' (' . implode(', ', $fields) . ') VALUE (' . implode(', ', $builds) . ')';
+        $sql .= ' (' . implode(', ', $fields) . ') VALUE' .
+            ' (' . implode(', ', $builds) . ')';
 
         $db->execute($sql, $data);
         $this->id = $db->lastInsertId();
@@ -57,7 +62,9 @@ abstract class Model
         $data = [];
         foreach ($props as $name => $value) {
             if ('id' != $name) {
-                if ('data' == $name) { continue; }
+                if ('data' == $name) {
+                    continue;
+                }
                 $fields[] = $name . ' = :' . $name;
             }
             $data[':' . $name] = $value;
@@ -78,6 +85,44 @@ abstract class Model
         $db->execute($sql, $data);
     }
 
+    /**
+     * @param array $data
+     * @throws Errors
+     */
+    public function fill(array $data)
+    {
+        $props = get_object_vars($this);
+        $errors = new Errors;
+        $t = false;
+
+        foreach ($props as $key => $value) {
+            if (!empty($data[$key])) {
+                try {
+                    $this->$key = $data[$key];
+                    $t = true;
+                } catch (Throwable $exception) {
+                    $errors->add($exception);
+                }
+            }
+        }
+
+        if (!$t) {
+            $errors->add(new Exception('Нет данных в массиве'));
+        }
+
+        if (!$errors->empty()) {
+            throw $errors;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed|static
+     * @throws NotFoundException
+     */
     public static function findById($id)
     {
         $db = new Db;
@@ -91,7 +136,7 @@ abstract class Model
                 }
             }
         }
-        return new static;
+        throw new NotFoundException();
     }
 
     public function save()
