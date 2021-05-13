@@ -8,20 +8,36 @@
 
 namespace App;
 
-use PDO as PDO;
+use App\Exceptions\DBException;
+use PDO;
+use PDOException;
 
 class Db
 {
-    protected $dbh;
+    protected PDO $dbh;
 
+    /**
+     * Db constructor.
+     * @throws DBException
+     */
     public function __construct()
     {
         $config = Config::init();
-        $this->dbh = new PDO('mysql:host=' . $config->data['db']['host'] . ';' .
-                            'dbname=' . $config->data['db']['dbname'] . ';' .
-                            'charset=' . $config->data['db']['charset'] . ';',
-                        $config->data['db']['user'],
-                        $config->data['db']['password']);
+
+        try {
+            $this->dbh = new PDO('mysql:host=' . $config->data['db']['host'] . ';' .
+                'dbname=' . $config->data['db']['dbname'] . ';' .
+                'charset=' . $config->data['db']['charset'] . ';',
+                $config->data['db']['user'],
+                $config->data['db']['password']);
+        } catch (PDOException $exception) {
+            throw new DBException(
+                'При инициализации подлючения к базе произошло исключение',
+                   0,
+                        $exception);
+        }
+
+        $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function query($sql, $params = [], $class = null)

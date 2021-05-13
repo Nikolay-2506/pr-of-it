@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-
-use App\Db;
+use App\Exceptions\NotFoundException;
 use App\Model;
 use App\ViewTrait;
-use Countable;
 
 /**
  * Class Article
@@ -26,6 +24,11 @@ class Article extends Model
     public $content;
     public $author_id;
 
+    /**
+     * @param $name
+     * @return mixed|null
+     * @throws NotFoundException
+     */
     public function __get($name)
     {
         if ($name == 'author') {

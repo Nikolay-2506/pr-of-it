@@ -5,6 +5,7 @@ namespace App;
 
 use App\Models\Article;
 use App\Models\Author;
+use Throwable;
 
 /**
  * Class View
@@ -13,6 +14,7 @@ use App\Models\Author;
  * @property Article[] $news
  * @property Article $article
  * @property Author[] $authors
+ * @property Throwable $exception
  */
 class View
 {
