@@ -4,10 +4,10 @@
   "authors": [
     {
       "name": "nikolay",
-      "email": "email@example.com"
+      "email": "svytoi.nik@gmail.com"
     }
   ],
   "require": {
-    "psr/log" : "1.1.4"
+    "twig/twig": "3.x-dev"
   }
 }

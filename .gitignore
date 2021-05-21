@@ -1,2 +1,4 @@
 # ignored vendor
 /vendor
+# ignored var
+/var

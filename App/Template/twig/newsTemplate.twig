@@ -1,0 +1,35 @@
+{% extends "baseTemplate.twig" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/App/Template/twig/css/newsTemplate/style.css"/>
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    <div>
+        <h1>{{ title }}</h1>
+    </div>
+    {% for article in news %}
+        <div class="article">
+            <span class="titleArticle">
+                <a href="?ctrl=article&id={{ article.id }}">
+                    {{ article.title }}
+                </a>
+            </span>
+            <div class="contentArticle">
+                <span>
+                    {{ article.content|nl2br }}
+                </span>
+            </div>
+            <div class="authorArticle">
+                <span>
+                    {% if article.author_id %}
+                        Автор статьи: {{ article.author.generateFullNameAuthor() }}
+                    {% else %}
+                        Статья не имеет автора
+                    {% endif %}
+
+                </span>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

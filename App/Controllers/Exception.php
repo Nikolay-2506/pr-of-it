@@ -3,11 +3,13 @@
 namespace App\Controllers;
 
 use App\Controller;
+use App\ViewTwig;
 
 class Exception extends Controller
 {
     protected function handle()
     {
-        echo $this->view->render(__DIR__ . '/../Template/exception.php');
+        $this->view->setTemplate(ViewTwig::EXCEPTION_TEMPLATE);
+        echo $this->view->render();
     }
 }
