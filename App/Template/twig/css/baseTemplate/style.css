@@ -1,0 +1,25 @@
+#body {
+    width: 90%;
+    background: #64a1d5;
+    margin: auto;
+}
+
+#logo {
+    display: flex;
+    flex-direction: row;
+}
+
+#logo img {
+    height: 60px;
+}
+
+#logo > span {
+    padding-top: 25px;
+    padding-left: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.padding {
+    padding: 0 25px;
+}

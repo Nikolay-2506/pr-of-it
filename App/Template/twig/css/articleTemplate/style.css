@@ -1,0 +1,10 @@
+#back a button {
+    border-radius: 10px;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    background: #64a1d5;
+}
+
+#back a button:hover {
+    text-decoration: underline;
+}

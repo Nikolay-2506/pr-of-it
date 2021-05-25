@@ -3,7 +3,7 @@
 
 namespace App\AdminPanel\Controllers;
 
-use App\Controller;
+use App\AdminPanel\Controller;
 use App\Models\Article;
 use App\Models\Author;
 

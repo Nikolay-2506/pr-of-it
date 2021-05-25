@@ -1,0 +1,18 @@
+{% extends "baseTemplate.twig" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/App/Template/twig/css/articleTemplate/style.css"/>
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    <h3>
+        {{ exception.getMessage() }}
+    </h3>
+    <div id="back">
+        <a href="/">
+            <button>
+                К списку новостой
+            </button>
+        </a>
+    </div>
+{% endblock %}

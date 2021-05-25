@@ -1,0 +1,13 @@
+{
+  "name": "vendor_name/pr-of-it",
+  "description": "description",
+  "authors": [
+    {
+      "name": "nikolay",
+      "email": "svytoi.nik@gmail.com"
+    }
+  ],
+  "require": {
+    "twig/twig": "3.x-dev"
+  }
+}

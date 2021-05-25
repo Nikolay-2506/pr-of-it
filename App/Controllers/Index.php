@@ -16,12 +16,17 @@ class Index extends Controller
     {
         try {
             $this->view->news = Article::findAll();
+            // используем замыкание
+            array_map(function (Article $article) {
+                $article->author;
+            }, $this->view->news);
         } catch (PDOException $exception) {
             throw new DBException(
                 'При получении списка новостей произошло исключение',
                    0,
                         $exception);
         }
-        echo $this->view->render(__DIR__ . '/../Template/tableNews.php');
+        $this->view->setTemplate();
+        echo $this->view->render();
     }
 }

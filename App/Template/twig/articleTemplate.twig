@@ -1,0 +1,36 @@
+{% extends "baseTemplate.twig" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/App/Template/twig/css/newsTemplate/style.css"/>
+    <link rel="stylesheet" href="/App/Template/twig/css/articleTemplate/style.css"/>
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    <div class="article">
+        <span class="titleArticle">
+            {{ article.title }}
+        </span>
+        <div class="contentArticle">
+            <span>
+                {{ article.content|nl2br }}
+            </span>
+        </div>
+        <div class="authorArticle">
+            <span>
+                {% if article.author %}
+                    Автор статьи: {{ article.author.generateFullNameAuthor() }}
+                {% else %}
+                    Статья не имеет автора
+                {% endif %}
+
+            </span>
+        </div>
+        <div id="back">
+            <a href="/">
+                <button>
+                    К списку новостой
+                </button>
+            </a>
+        </div>
+    </div>
+{% endblock %}
