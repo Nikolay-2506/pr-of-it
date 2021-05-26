@@ -17,7 +17,13 @@ abstract class Model
     {
         $db = new Db;
         $sql = 'SELECT * FROM ' . static::$table;
-        return $db->query($sql, [], static::class);
+
+        $data = [];
+
+        foreach ($db->queryEach($sql, [], static::class) as $item) {
+            $data[] = $item;
+        }
+        return $data;
     }
 
     public static function findLastThree()
@@ -127,15 +133,13 @@ abstract class Model
     {
         $db = new Db;
         $builds[':id'] = $id;
+
         $sql = 'SELECT * FROM ' . static::$table . ' WHERE id = :id';
-        $data = $db->query($sql, $builds, static::class);
-        if (is_array($data)) {
-            foreach ($data as $datum) {
-                if ($datum instanceof static) {
-                    return $datum;
-                }
-            }
+
+        foreach ($db->queryEach($sql, $builds, static::class) as $item) {
+            return $item;
         }
+
         throw new NotFoundException();
     }
 

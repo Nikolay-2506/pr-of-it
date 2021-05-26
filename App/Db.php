@@ -11,6 +11,7 @@ namespace App;
 use App\Exceptions\DBException;
 use PDO;
 use PDOException;
+use PDOStatement;
 
 class Db
 {
@@ -33,8 +34,8 @@ class Db
         } catch (PDOException $exception) {
             throw new DBException(
                 'При инициализации подлючения к базе произошло исключение',
-                   0,
-                        $exception);
+                0,
+                $exception);
         }
 
         $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -45,11 +46,29 @@ class Db
         $sth = $this->dbh->prepare($sql);
         $sth->execute($params);
         if ($class == null) {
-            $sth->setFetchMode(\PDO::FETCH_ASSOC);
+            $sth->setFetchMode(PDO::FETCH_ASSOC);
         } else {
-            $sth->setFetchMode(\PDO::FETCH_CLASS, $class);
+            $sth->setFetchMode(PDO::FETCH_CLASS, $class);
         }
+
         return $sth->fetchAll();
+    }
+
+    public function queryEach($sql, $params = [], $class = null)
+    {
+        $sth = $this->dbh->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL]);
+
+        $sth->execute($params);
+
+        if ($class == null) {
+            $sth->setFetchMode(PDO::FETCH_ASSOC);
+        } else {
+            $sth->setFetchMode(PDO::FETCH_CLASS, $class);
+        }
+
+        while ($row = $sth->fetch(null, PDO::FETCH_ORI_NEXT)) {
+            yield $row;
+        }
     }
 
     public function execute($query, $params = [])

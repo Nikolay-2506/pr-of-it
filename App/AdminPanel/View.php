@@ -1,10 +1,12 @@
 <?php
 
 
-namespace App;
+namespace App\AdminPanel;
 
 use App\Models\Article;
 use App\Models\Author;
+use App\ViewTrait;
+use Closure;
 use Throwable;
 
 /**
@@ -14,6 +16,8 @@ use Throwable;
  * @property Article[] $news
  * @property Article $article
  * @property Author[] $authors
+ * @property Article[] rows
+ * @property Closure[] $columns
  * @property Throwable $exception
  */
 class View

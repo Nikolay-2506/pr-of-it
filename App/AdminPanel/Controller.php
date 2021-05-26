@@ -1,11 +1,8 @@
 <?php
 
-
 namespace App\AdminPanel;
 
-
 use App\ControllerAction;
-use App\View;
 
 abstract class Controller extends ControllerAction
 {

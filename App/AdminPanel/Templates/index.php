@@ -1,4 +1,4 @@
-<?php use App\View;?>
+<?php use App\AdminPanel\View;?>
 <?php use App\Models\Article;?>
 <?php /** @var View $this */ ?>
 <?php /** @var Article $article */?>
@@ -66,22 +66,22 @@
         <th>Контент</th>
         <th>Автор</th>
     </tr>
-    <?php foreach ($this->news as $article): ?>
+    <?php foreach ($this->rows as $article): ?>
         <tr>
             <td>
                 <a class="record"
-                   href="/App/AdminPanel/index.php?ctrl=edit&id=<?php echo $article->id; ?>">
-                    <?php echo $article->title; ?>
+                   href="/App/AdminPanel/index.php?ctrl=edit&id=<?php echo $this->columns['id']($article); ?>">
+                    <?php echo $this->columns['title']($article); ?>
                 </a>
             </td>
             <td>
-                <?php echo $article->content; ?>
+                <?php echo $this->columns['content']($article); ?>
             </td>
             <td>
-                <?php if (!is_null($article->author)): ?>
-                    <?php echo $article->author->firstName . ' ' . $article->author->lastName; ?>
+                <?php if (!is_null($this->columns['author']($article))): ?>
+                    <?php echo $this->columns['author']($article); ?>
                     <hr/>
-                    <?php echo $article->author->email;?>
+                    <?php echo $this->columns['email']($article);?>
                 <?php else: ?>
                     Автор не известен
                 <?php endif; ?>
