@@ -34,6 +34,6 @@ class Index extends ControllerAction
             ];
         $adminDataTable = new AdminDataTable(Article::findAll(), $columns);
 
-        echo $adminDataTable->getView()->render(__DIR__ . '/../Templates/index.php');
+        echo $adminDataTable->render(__DIR__ . '/../Templates/index.php');
     }
 }

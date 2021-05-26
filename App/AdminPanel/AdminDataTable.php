@@ -24,8 +24,8 @@ class AdminDataTable
         $this->view->columns = $columns;
     }
 
-    public function getView()
+    public function render($template)
     {
-        return $this->view;
+        return $this->view->render($template);
     }
 }
